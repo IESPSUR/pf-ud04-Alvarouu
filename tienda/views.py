@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-
+from .forms import productoForm
 from tienda.models import Producto
 
 
@@ -23,3 +23,22 @@ def creaProducto(request):
                                       detalles=detalles, marca=marca)
         obj.save()
         return redirect('/')
+
+
+def muestraProducto(request):
+    prod = Producto.objects.all()
+    return render(request, 'muestraProducto.html', {'prod': prod})
+
+
+def edit(request, id):
+    object = Producto.objects.get(id=id)
+    return render(request, 'editar.html', {'object': object})
+
+
+def update(request, id):
+    object = Producto.objects.get(id=id)
+    form = productoForm(request.POST, instance=object)
+    if form.is_valid:
+        form.save()
+        object = Producto.objects.all()
+        return redirect('muestraProducto')
