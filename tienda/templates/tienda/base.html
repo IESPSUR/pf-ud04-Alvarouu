@@ -16,6 +16,17 @@
         	<div class="row">
             		<div class="col">
             			{% block content %}
+
+                            {% if message %}
+
+                                <ul>
+                                    {% for message in messages %}
+                                        <li>{{ message }}</li>
+                                    {% endfor %}
+                                </ul>
+
+                            {% endif %}
+
             			{% endblock %}
             		</div>
         	</div>

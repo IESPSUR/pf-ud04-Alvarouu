@@ -1,0 +1,32 @@
+{% extends 'tienda/base.html' %}
+
+{% block content %}
+    <form>
+        {% csrf_token %}
+
+            <table>
+                {% if prod %}
+                    <th>
+                    Nombre
+                </th>
+                <th>
+                    Modelo
+                </th>
+                <th>
+                    Unidades
+                </th>
+                <th>
+                    Precio
+                </th>
+                <th>
+                    Detalles
+                </th>
+                <th>
+                    Marca
+                </th>
+
+                {% endif %}
+            </table>
+
+    </form>
+{% endblock %}

@@ -1,1 +1,29 @@
 {% extends base.html %}
+{% block content %}
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <table>
+            <tr>
+            Nombre:
+            </tr>
+            <tr>
+            Modelo:
+            </tr>
+            <tr>
+            Unidades:
+            </tr>
+            <tr>
+            Precio:
+            </tr>
+            <tr>
+            Detalles:
+            </tr>
+            <tr>
+            Marca:
+            </tr>
+        </table>
+    </form>
+
+{% endblock %}

@@ -11,6 +11,7 @@ def welcome(request):
 
 
 def creaProducto(request):
+
     if request.method == 'POST':
         nombre = request.POST['nombre']
         modelo = request.POST['modelo']
@@ -26,8 +27,13 @@ def creaProducto(request):
 
 
 def muestraProducto(request):
+
     prod = Producto.objects.all()
-    return render(request, 'muestraProducto.html', {'prod': prod})
+    # if request.method == 'GET':
+    #
+    #     producto =
+
+    return render(request, 'tienda/listado.html', {'prod': prod})
 
 
 def edit(request, id):
@@ -42,3 +48,5 @@ def update(request, id):
         form.save()
         object = Producto.objects.all()
         return redirect('muestraProducto')
+
+
