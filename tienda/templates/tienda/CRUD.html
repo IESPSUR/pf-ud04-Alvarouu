@@ -1,30 +1,26 @@
 {% extends 'tienda/base.html' %}
 
 {% block content %}
+
     <form>
         {% csrf_token %}
             {% if prod %}
                 <table class="table table-striped">
-
-
                     <thead>
                     <th>
                         Nombre
                     </th>
                     <th>
-                        Detalles
-                    </th>
-                    <th>
                         Marca
                     </th>
                     <th>
-                        Modelo
+                        Borrar
                     </th>
                     <th>
-                        Unidades
+                        Añadir
                     </th>
                     <th>
-                        Precio
+                        Editar
                     </th>
                     </thead>
 
@@ -34,26 +30,22 @@
                                 {{ producto.nombre }}
                             </td>
                             <td>
-                                {{ producto.detalles }}
-                            </td>
-                            <td>
                                 {{ producto.marca }}
                             </td>
                             <td>
-                                {{ producto.modelo }}
+                                <button class="btn btn-danger">Borrar</button>
                             </td>
                             <td>
-                                {{ producto.unidades }}
+                                <button class="btn btn-info">Añadir</button>
                             </td>
                             <td>
-                                {{ producto.precio }}
-                            </td>
-                            <td>
-                                <button class="btn btn-info">Comprar</button>
+                                <button class="btn btn-warning">Editar</button>
                             </td>
                         </tr>
                     {% endfor %}
+
                 </table>
             {% endif %}
     </form>
+    <button class="btn btn-dark"><a href="/">Atras</a></button>
 {% endblock %}

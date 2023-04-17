@@ -10,6 +10,11 @@ def welcome(request):
     return render(request,'tienda/index.html', {})
 
 
+def crud(request):
+    prod = Producto.objects.all()
+
+    return render(request, 'tienda/CRUD.html', {'prod':prod})
+
 def creaProducto(request):
 
     if request.method == 'POST':
