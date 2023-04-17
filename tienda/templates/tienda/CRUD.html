@@ -17,9 +17,6 @@
                         Borrar
                     </th>
                     <th>
-                        Añadir
-                    </th>
-                    <th>
                         Editar
                     </th>
                     </thead>
@@ -38,9 +35,6 @@
                                 </a>
                             </td>
                             <td>
-                                <button class="btn btn-info">Añadir</button>
-                            </td>
-                            <td>
                                 <button class="btn btn-warning">Editar</button>
                             </td>
                         </tr>
@@ -49,5 +43,6 @@
                 </table>
             {% endif %}
     </form>
+    <a href="{% url 'Aniadir' %}"><button class="btn btn-info">Añadir Producto</button></a>
     <button class="btn btn-dark"><a href="/">Atras</a></button>
 {% endblock %}

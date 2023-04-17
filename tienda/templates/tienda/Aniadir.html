@@ -1,0 +1,53 @@
+{% extends 'tienda/base.html' %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+
+
+            <table>
+                <th>
+                    Nombre
+                </th>
+                <th>
+                    Modelo
+                </th>
+                <th>
+                    Unidades
+                </th>
+                <th>
+                    Precio
+                </th>
+                <th>
+                    Detalles
+                </th>
+                <th>
+                    Marca
+                </th>
+                <tr>
+                    <td>
+                        {{ formulario.nombre }}
+                    </td>
+                    <td>
+                        {{ formulario.modelo }}
+                    </td>
+                    <td>
+                        {{ formulario.unidades }}
+                    </td>
+                    <td>
+                        {{ formulario.precio }}
+                    </td>
+                    <td>
+                        {{ formulario.detalles }}
+                    </td>
+                    <td>
+                        {{ formulario.marca }}
+                    </td>
+                </tr>
+
+            </table>
+
+            <input type="submit" class="btn btn-primary">
+
+    </form>
+{% endblock %}

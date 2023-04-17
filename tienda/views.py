@@ -15,7 +15,10 @@ def crud(request):
 
     return render(request, 'tienda/CRUD.html', {'prod':prod})
 
+
 def creaProducto(request):
+
+    formulario = productoForm()
 
     if request.method == 'POST':
         nombre = request.POST['nombre']
@@ -30,6 +33,8 @@ def creaProducto(request):
         obj.save()
         return redirect('/')
 
+    return render(request, 'tienda/Aniadir.html',   {'formulario': formulario})
+
 
 def muestraProducto(request):
 
@@ -41,8 +46,8 @@ def muestraProducto(request):
     return render(request, 'tienda/listado.html', {'prod': prod})
 
 
-def edit(request, id):
-    object = Producto.objects.get(id=id)
+def edit(request, pk):
+    object = Producto.objects.get(pk=pk)
     return render(request, 'editar.html', {'object': object})
 
 
@@ -54,8 +59,8 @@ def delete(request, pk):
     return render(request, 'tienda/borrado.html', {'producto': producto})
 
 
-def update(request, id):
-    object = Producto.objects.get(id=id)
+def update(request, pk):
+    object = Producto.objects.get(pk=pk)
     form = productoForm(request.POST, instance=object)
     if form.is_valid:
         form.save()
