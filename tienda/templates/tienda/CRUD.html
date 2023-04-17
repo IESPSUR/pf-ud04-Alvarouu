@@ -33,7 +33,9 @@
                                 {{ producto.marca }}
                             </td>
                             <td>
-                                <button class="btn btn-danger">Borrar</button>
+                                <a href="{% url 'borrarProducto' producto.pk %}" >
+                                    <button type="button" class="btn btn-danger">Borrar</button>
+                                </a>
                             </td>
                             <td>
                                 <button class="btn btn-info">Añadir</button>

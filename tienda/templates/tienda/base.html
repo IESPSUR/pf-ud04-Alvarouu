@@ -9,6 +9,13 @@
     <link rel="stylesheet" href="{% static 'css/tienda.css' %}">
 </head>
 <body>
+{% for message in messages %}
+    {% if message.tags == 'debug' %}
+        <div class="alert alert-debug">
+            {{ message }}
+        </div>
+    {% endif %}
+{% endfor %}
 <div class="page-header">
 		<h1><a href="/">Tienda Virtual</a></h1>
     	</div>

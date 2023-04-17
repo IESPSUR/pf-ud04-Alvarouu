@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import productoForm
 from tienda.models import Producto
 
@@ -44,6 +44,14 @@ def muestraProducto(request):
 def edit(request, id):
     object = Producto.objects.get(id=id)
     return render(request, 'editar.html', {'object': object})
+
+
+def delete(request, pk):
+    producto = get_object_or_404(Producto, pk=pk)
+    if request.method == 'POST':
+        producto.delete()
+        return redirect('CRUD')
+    return render(request, 'tienda/borrado.html', {'producto': producto})
 
 
 def update(request, id):
