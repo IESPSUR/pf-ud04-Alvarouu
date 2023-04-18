@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import productoForm
-from tienda.models import Producto
+from tienda.models import Producto, Marca
 
 
 # Create your views here.
 
 
 def welcome(request):
+
     return render(request,'tienda/index.html', {})
 
 
@@ -26,7 +27,8 @@ def creaProducto(request):
         unidades = request.POST['unidades']
         precio = request.POST['precio']
         detalles = request.POST['detalles']
-        marca = request.POST['marca']
+        nombre_marca = request.POST['marca']
+        marca = Marca.objects.get(nombre=nombre_marca)
         obj = Producto.objects.create(nombre=nombre, modelo=modelo,
                                       unidades=unidades, precio=precio,
                                       detalles=detalles, marca=marca)
@@ -47,24 +49,29 @@ def muestraProducto(request):
 
 
 def edit(request, pk):
-    object = Producto.objects.get(pk=pk)
-    return render(request, 'editar.html', {'object': object})
+    print('hola')
+    prod = get_object_or_404(Producto, pk=pk)
+
+    if request.method == 'POST':
+        form = productoForm(request.POST, instance=prod)
+
+        if form.is_valid():
+            form.save()
+            return redirect('listado')
+
+    form = productoForm(instance=prod)
+
+    return render(request, 'tienda/editar.html', {'form': form})
 
 
 def delete(request, pk):
+
     producto = get_object_or_404(Producto, pk=pk)
+
     if request.method == 'POST':
         producto.delete()
         return redirect('CRUD')
+
     return render(request, 'tienda/borrado.html', {'producto': producto})
-
-
-def update(request, pk):
-    object = Producto.objects.get(pk=pk)
-    form = productoForm(request.POST, instance=object)
-    if form.is_valid:
-        form.save()
-        object = Producto.objects.all()
-        return redirect('muestraProducto')
 
 

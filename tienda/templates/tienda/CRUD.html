@@ -31,11 +31,13 @@
                             </td>
                             <td>
                                 <a href="{% url 'borrarProducto' producto.pk %}" >
-                                    <button type="button" class="btn btn-danger">Borrar</button>
+                                    <button class="btn btn-danger">Borrar</button>
                                 </a>
                             </td>
                             <td>
-                                <button class="btn btn-warning">Editar</button>
+                                <a href="{% url 'editar' producto.pk %}">
+                                    Editar
+                                </a>
                             </td>
                         </tr>
                     {% endfor %}
@@ -43,6 +45,8 @@
                 </table>
             {% endif %}
     </form>
-    <a href="{% url 'Aniadir' %}"><button class="btn btn-info">Añadir Producto</button></a>
+    <a href="{% url 'Aniadir' %}">
+        <button class="btn btn-info">Añadir Producto</button>
+    </a>
     <button class="btn btn-dark"><a href="/">Atras</a></button>
 {% endblock %}
