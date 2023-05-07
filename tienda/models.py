@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 
 
@@ -24,7 +25,7 @@ class Producto(models.Model):
 class Compra(models.Model):
 
     producto = models.ForeignKey(Producto, models.PROTECT)
-    user = models.CharField(max_length=30)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
     fecha = models.DateField('Fecha')
     unidades = models.IntegerField('Unidades')
     importe = models.DecimalField(max_digits=10, decimal_places=2)

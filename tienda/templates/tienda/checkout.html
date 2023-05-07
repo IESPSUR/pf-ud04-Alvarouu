@@ -1,0 +1,35 @@
+{% extends 'tienda/base.html' %}
+{% block content %}
+    <h2>Checkout</h2>
+    <table class="table table-striped">
+        <thread>
+            <th>Nombre</th>
+            <th>Marca</th>
+            <th>Modelo</th>
+            <th>Unidades</th>
+            <th>Precio</th>
+            <th>Detalles</th>
+        </thread>
+        <tbody>
+        <tr>
+            <td>{{ producto.nombre }}</td>
+            <td>{{ producto.marca }}</td>
+            <td>{{ producto.modelo }}</td>
+            <td>{{ producto.unidades }}</td>
+            <td>{{ producto.precio }}€</td>
+            <td>{{ producto.detalles }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ checkout_form.unidades }}
+
+        <p>¿Comprar <b>{{ compra_unidades }}</b> unidades de <b>{{ producto.nombre }}</b> por <b>{{ precio_total }}</b>€ ?</p>
+
+        <button type="submit" class="btn btn-primary">Confirmar</button>
+        <a href="{% url 'listado' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+
+{% endblock %}

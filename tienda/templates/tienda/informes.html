@@ -1,0 +1,11 @@
+{% extends 'tienda/base.html' %}
+
+{% block content %}
+	<h2>Bienvenido a la tienda virtual</h2>
+	<ul>
+        <li><a href="">Productos por marca</a></li>
+        <li><a href="">Top 10 productos</a></li>
+        <li><a href="{% url 'comprasUsuario' %}">Compras del usuario</a></li>
+        <li><a href="">Top 10 mejores clientes</a></li>
+    </ul>
+{% endblock %}

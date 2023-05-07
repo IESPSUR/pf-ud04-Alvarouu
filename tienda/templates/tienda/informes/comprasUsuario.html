@@ -1,0 +1,49 @@
+{% extends 'tienda/base.html' %}
+
+{% block content %}
+
+    <h2>Compras del usuario</h2>
+
+    <form method="GET" action="{% url 'comprasUsuario' %}">
+        {% csrf_token %}
+        {{ filtro_usuario.as_p }}
+        <button type="submit">Filtrar</button>
+    </form>
+
+    {% if compras %}
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Unidades</th>
+                <th>Importe</th>
+                <th>Usuario</th>
+                <th>Fecha y hora</th>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            {% for compras in compras %}
+
+                <tr>
+                    <td>{{ compras.producto }}</td>
+                    <td>{{ compras.unidades }}</td>
+                    <td>{{ compras.importe }} €</td>
+                    <td>{{ compras.user }}</td>
+                    <td>{{ compras.fecha }}</td>
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+        </table>
+
+    {% endif %}
+
+    <a href="{% url 'informes' %}">
+        <input type="button" class="btn btn-secondary" value="Atrás">
+    </a>
+
+{% endblock %}

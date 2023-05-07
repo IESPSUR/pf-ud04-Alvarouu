@@ -1,0 +1,15 @@
+{% extends 'tienda/base.html' %}
+
+{% block content %}
+
+    <form method="POST">
+    {% csrf_token %}
+        <h1>¿Cuantas unidades de {{ producto.nombre }} quieres?</h1>
+        <input type="hidden" name="producto" value="{{ producto.pk }}">
+        <label for="unidades">Unidades:</label>
+        <input type="number" name="unidades" id="unidades" required>
+        <br>
+        <button type="submit">Confirmar Compra</button>
+    </form>
+
+{% endblock %}

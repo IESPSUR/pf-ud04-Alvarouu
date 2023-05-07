@@ -1,59 +1,43 @@
 {% extends 'tienda/base.html' %}
 
 {% block content %}
-    <form>
-        {% csrf_token %}
-            {% if prod %}
-                <table class="table table-striped">
+    <h2>Compra</h2>
+    <table class="table table-striped">
+        <thread>
+            <th>Nombre</th>
+            <th>Marca</th>
+            <th>Modelo</th>
+            <th>Unidades</th>
+            <th>Precio</th>
+            <th>Detalles</th>
+            <th>Uds. a comprar</th>
+            <th></th>
+        </thread>
+        <tbody>
+        {% for producto in productos %}
+            <tr>
+                <td>{{ producto.nombre }}</td>
+                <td>{{ producto.marca }}</td>
+                <td>{{ producto.modelo }}</td>
+                <td>{{ producto.unidades }}</td>
+                <td>{{ producto.precio }}€</td>
+                <td>{{ producto.detalles }}</td>
+                <form method="get" action="{% url 'checkout' producto.pk %}">
+                    <td>
+                        {% csrf_token %}
+                        {{ compra_form.unidades }}
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-primary">Comprar</button>
+                    </td>
+                </form>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
+    <a href="{% url 'welcome' %}">
+        <input type="button" class="btn btn-secondary" value="Atrás">
+    </a>
 
-                    <thead>
-                    <th>
-                        Nombre
-                    </th>
-                    <th>
-                        Detalles
-                    </th>
-                    <th>
-                        Marca
-                    </th>
-                    <th>
-                        Modelo
-                    </th>
-                    <th>
-                        Unidades
-                    </th>
-                    <th>
-                        Precio
-                    </th>
-                    </thead>
-
-                    {% for producto in prod %}
-                        <tr>
-                            <td>
-                                {{ producto.nombre }}
-                            </td>
-                            <td>
-                                {{ producto.detalles }}
-                            </td>
-                            <td>
-                                {{ producto.marca }}
-                            </td>
-                            <td>
-                                {{ producto.modelo }}
-                            </td>
-                            <td>
-                                {{ producto.unidades }}
-                            </td>
-                            <td>
-                                {{ producto.precio }}
-                            </td>
-                            <td>
-                                <button class="btn btn-info">Comprar</button>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </table>
-            {% endif %}
-    </form>
 {% endblock %}
