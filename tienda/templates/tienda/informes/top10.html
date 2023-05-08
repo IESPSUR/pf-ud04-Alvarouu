@@ -2,4 +2,27 @@
 
 {% block content %}
 
+    <h2>Top ten productos vendidos</h2>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Unidades vendidas</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for producto in productos_mas_vendidos %}
+            <tr>
+                <td>{{ producto.nombre }}</td>
+                <td>{{ producto.total_vendido }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{% url 'informes' %}">
+        <input type="button" class="btn btn-secondary" value="Atrás">
+    </a>
+
 {% endblock %}

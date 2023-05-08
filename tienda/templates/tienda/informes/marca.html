@@ -2,4 +2,50 @@
 
 {% block content %}
 
+    <h2>Productos por marca</h2>
+
+    <form method="GET" action="{% url 'marca' %}">
+        {% csrf_token %}
+        {{ filtro_marca.as_p }}
+        <button type="submit">Filtrar</button>
+    </form>
+
+    {% if productos %}
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Modelo</th>
+                <th>Unidades</th>
+                <th>Precio</th>
+                <th>Detalles</th>
+                <th>Marca</th>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            {% for productos in productos %}
+
+                <tr>
+                    <td>{{ productos.nombre }}</td>
+                    <td>{{ productos.modelo }}</td>
+                    <td>{{ productos.unidades }} €</td>
+                    <td>{{ productos.precio }}</td>
+                    <td>{{ productos.detalles }}</td>
+                    <td>{{ productos.marca }}</td>
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+        </table>
+
+    {% endif %}
+
+    <a href="{% url 'informes' %}">
+        <input type="button" class="btn btn-secondary" value="Atrás">
+    </a>
+
 {% endblock %}

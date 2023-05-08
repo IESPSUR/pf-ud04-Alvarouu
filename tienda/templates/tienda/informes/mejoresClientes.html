@@ -2,4 +2,27 @@
 
 {% block content %}
 
+    <h2>Top ten mejores clientes</h2>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Importe gastado</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for cliente in mejores_clientes %}
+            <tr>
+                <td>{{ cliente.username }}</td>
+                <td>{{ cliente.total_gastado }} €</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{% url 'informes' %}">
+        <input type="button" class="btn btn-secondary" value="Atrás">
+    </a>
+
 {% endblock %}
