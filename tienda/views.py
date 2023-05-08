@@ -1,8 +1,9 @@
 from django.contrib.auth.models import User
 from django.db import transaction
+from django.db.models import Sum
 from django.shortcuts import render, redirect, get_object_or_404
 from pyexpat.errors import messages
-from .forms import productoForm, FiltroForm, CompraForm, UsuarioForm
+from .forms import productoForm, FiltroForm, CompraForm, UsuarioForm, MarcaForm
 from tienda.models import Producto, Marca, Compra
 from django.utils import timezone
 from django.contrib import messages
@@ -91,24 +92,25 @@ def checkout(request, pk):
 
             if compra_unidades <= 0:
                 messages.warning(request, "Introduzca un número mayor o igual a 1.")
-                return redirect('confirmaCompra')
+                return redirect('listado')
 
             if compra_unidades > producto.unidades:
                 messages.warning(request, "Se están intentando comprar más unidades de las disponibles.")
-                return redirect('confirmaCompra')
+                return redirect('listado')
         else:
             messages.error(request, "Error")
-            return redirect('confirmaCompra')
+            return redirect('listado')
 
     elif request.method == 'POST':
         importe = compra_unidades * producto.precio
         compra = Compra(producto=producto, unidades=compra_unidades, importe=importe)
-        #compra.usuario = request.user
+        compra.fecha = timezone.datetime.now()
+        compra.user = request.user
         compra.save()
         producto.unidades -= compra_unidades
         producto.save()
         messages.success(request, "Artículo: " + producto.nombre + " comprado con éxito.")
-        return redirect('confirmaCompra')
+        return redirect('listado')
 
     return render(request, 'tienda/checkout.html',
                   {'producto': producto, 'precio_total': precio_total, 'compra_unidades': compra_unidades,
@@ -143,3 +145,37 @@ def comprasUsuario(request):
 
     return render(request, 'tienda/informes/comprasUsuario.html',
                   {'compras': compras, 'filtro_usuario': filtro_usuario})
+
+
+def productoMarca(request):
+    producto = Producto.objects.all()
+
+    if request.GET.get("marca"):
+        filtro_marca = MarcaForm(request.GET)
+
+        if filtro_marca.is_valid():
+            marca = filtro_marca.cleaned_data.get('marca')
+            productos = Producto.objects.filter(marca__nombre=marca)
+
+    else:
+        filtro_marca = MarcaForm()
+        productos = Producto.objects.all()
+
+    return render(request, 'tienda/informes/marca.html',
+                  {'productos': productos, 'filtro_marca': filtro_marca})
+
+
+def productos10(request):
+    productos_mas_vendidos = Producto.objects.annotate(
+        total_vendido=Sum('compra__unidades')
+    ).order_by('-total_vendido')[:10]
+
+    return render(request, 'tienda/informes/top10.html'
+                  ,{'productos_mas_vendidos':productos_mas_vendidos})
+
+
+def clientes(request):
+    mejores_clientes = User.objects.annotate(total_gastado=Sum('compra__importe')).order_by('-total_gastado')[:10]
+
+    return render(request, 'tienda/informes/mejoresClientes.html', {'mejores_clientes': mejores_clientes})
+

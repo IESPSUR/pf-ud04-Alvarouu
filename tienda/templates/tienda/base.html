@@ -11,9 +11,19 @@
 <body>
 {% for message in messages %}
     {% if message.tags == 'debug' %}
-        <div class="alert alert-debug">
-            {{ message }}
-        </div>
+        <div class="alert alert-debug">{{ message }}</div>
+    {% endif %}
+    {% if message.tags == 'info' %}
+        <div class="alert alert-info">{{ message }}</div>
+    {% endif %}
+    {% if message.tags == 'success' %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endif %}
+    {% if message.tags == 'warning' %}
+        <div class="alert alert-warning">{{ message }}</div>
+    {% endif %}
+    {% if message.tags == 'error' %}
+        <div class="alert alert-danger">{{ message }}</div>
     {% endif %}
 {% endfor %}
 <div class="page-header">
